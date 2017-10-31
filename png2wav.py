@@ -6,6 +6,7 @@ import librosa.display
 import argparse
 import os
 from PIL import Image
+from PIL import PngImagePlugin
 import json
 
 from spsi import spsi
@@ -39,26 +40,30 @@ def PNG2LogSpect(fname,scalemin,scalemax):
     If not stored in one of png metadata, the values needed to undo previous scaling are required to be specified.
     """
     img = Image.open(fname)
+    #info = PngImagePlugin.PngInfo()
     
-    try:
+    try:       
         img.text = img.text
+        lwinfo = json.loads(img.text['meta'])
     except:
         print('PNG2LogSpect: no img.text, using user specified values!')
         lwinfo = {}
         lwinfo['scaleMin'] = scalemin #require to pass in
         lwinfo['scaleMax'] = scalemax
-        info.add_text('meta',json.dumps(lwinfo))
-    
-    lwinfo = json.loads(img.text['meta'])
+        #info.add_text('meta',json.dumps(lwinfo))
+   
     minx, maxx = float(lwinfo['scaleMin']), float(lwinfo['scaleMax'])
     #minx, maxx = float(lwinfo['oldmin']), float(lwinfo['oldmax'])
-
+    
+    img = img.convert('L')
     outimg = np.asarray(img, dtype=np.float32)
     outimg = (outimg - 0)/(255-0)*(maxx-minx) + minx
+
     return np.flipud(outimg), lwinfo
 
 
 D,_ = PNG2LogSpect(FLAGS.filename,FLAGS.scalemin,FLAGS.scalemax)
+print(D.shape)
 Dsize, _  = D.shape
 fftsize = 2*(Dsize-1) #infer fftsize from no. of fft bins i.e. height of image
 

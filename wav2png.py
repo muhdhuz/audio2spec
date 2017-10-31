@@ -67,7 +67,7 @@ def log_scale(x):
     return output
 
 
-def findMinMax(img) :
+def findMinMax(img):
     return np.amin(img),np.amax(img)
 
 
@@ -87,7 +87,7 @@ def logSpect2PNG(outimg, fname, lwinfo=None) :
     pngimg.save(fname,pnginfo=info)
  
  
-def checkScaling(topdir, outdir, srate, fftSize, fftHop, dur) :
+def checkScaling(topdir, outdir, srate, fftSize, fftHop, dur):
     """ 
         Returns the max and min values of the log magnitude after STFT in the whole dataset.
         This is to provide a known and standardized mapping from [min,max] -> [0,255] when saving as a png image.
