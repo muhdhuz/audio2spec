@@ -63,7 +63,6 @@ def PNG2LogSpect(fname,scalemin,scalemax):
 
 
 D,_ = PNG2LogSpect(FLAGS.filename,FLAGS.scalemin,FLAGS.scalemax)
-print(D.shape)
 Dsize, _  = D.shape
 fftsize = 2*(Dsize-1) #infer fftsize from no. of fft bins i.e. height of image
 
