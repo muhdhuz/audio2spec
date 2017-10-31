@@ -32,7 +32,8 @@ def inv_log(img):
     return img
 
 
-def PNG2LogSpect(fname,scalemin,scalemax):
+def PNG2LogSpect(fname,scalemin,scalemax):
+
     """
     Read png spectrograms, expand to original scale and return numpy array.
     If not stored in one of png metadata, the values needed to undo previous scaling are required to be specified.
