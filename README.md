@@ -41,9 +41,9 @@ Example use:
 
 **For linear to cqt**
 ```bash
-python ./cqtconv.py --rootdir [rootdir] --outdir [outdir] --conversion cqt2spec
+python ./cqtconv.py --rootdir [rootdir] --outdir [outdir] --conversion spec2cqt
 ```
 **For cqt to linear**
 ```bash
-python ./cqtconv.py --rootdir [rootdir] --outdir [outdir] --conversion spec2cqt
+python ./cqtconv.py --rootdir [rootdir] --outdir [outdir] --conversion cqt2spec 
 ```
