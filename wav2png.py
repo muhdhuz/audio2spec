@@ -21,7 +21,7 @@ parser.add_argument('--rootdir', type=str, help='Roots folder where class folder
 parser.add_argument('--outdir', type=str, help='Output directory', default='./output')
 parser.add_argument('--sr', type=int, help='Samplerate', default=None) 
 parser.add_argument('--fftsize', type=int, help='Size of fft window in samples', default=1024)
-parser.add_argument('--hopsize', type=int, help='Size of frame hop through sample file', default=512)
+parser.add_argument('--hopsize', type=int, help='Size of frame hop through sample file', default=256)
 parser.add_argument('--dur', type=int, help='Make files this duration in sec. If unspecified keep original duration', default=None)
 
 FLAGS, unparsed = parser.parse_known_args()
@@ -56,9 +56,11 @@ def wav2stft(fname, srate, fftSize, fftHop, dur) :
         print('can not read ' + fname)
         return
     
-    #if srate == None:
-    #    print('Using native samplerate of ' + str(samplerate))
-    S = np.abs(librosa.stft(audiodata, n_fft=fftSize, hop_length=fftHop, win_length=fftSize,  center=False))                
+    if srate == None:
+        print('Using native samplerate of ' + str(samplerate))
+    S = np.abs(librosa.stft(audiodata, n_fft=fftSize, hop_length=fftHop, win_length=fftSize,  center=True))
+    #print(audiodata.shape)
+    #print(S.shape)
     return S
 
 
@@ -150,7 +152,6 @@ def wav2Spect(topdir, outdir, srate, fftSize, fftHop, dur, pnginfo) :
         
         for idx in range(len(fullpaths)) : 
             fname = os.path.basename(fullpaths[idx])
-            
             D = wav2stft(fullpaths[idx], srate, fftSize, fftHop, dur)
             D = log_scale(D)
             
@@ -189,7 +190,7 @@ def wav2Spect_single(filename, srate, fftSize, fftHop, dur) :
     logSpect2PNG(D, os.path.splitext(filename)[0] +'.png',pnginfo)
 
     print("COMPLETE") 
-
+    
 
 if FLAGS.mode == 'folder':
     pnginfo = checkScaling(FLAGS.rootdir,FLAGS.outdir,FLAGS.sr,FLAGS.fftsize,FLAGS.hopsize,FLAGS.dur)
