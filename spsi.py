@@ -10,6 +10,7 @@ def spsi(msgram, fftsize, hop_length) :
     
     numBins, numFrames  = msgram.shape
     y_out=np.zeros(numFrames*hop_length+fftsize-hop_length)
+    #np.zeros(numFrames*hop_length+fftsize-hop_length)
         
     m_phase=np.zeros(numBins);      
     m_win=scipy.signal.hanning(fftsize, sym=True)  # assumption here that hann was used to create the frames of the spectrogram
