@@ -31,6 +31,7 @@ Example use:
 **For single png spectrogram**
 ```bash
 python ./png2wav.py [filename.png]
+```
 
 ## cqtconv
 
